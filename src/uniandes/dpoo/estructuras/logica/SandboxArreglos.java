@@ -1,6 +1,7 @@
 package uniandes.dpoo.estructuras.logica;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Esta clase tiene un conjunto de métodos para practicar operaciones sobre arreglos de enteros y de cadenas.
@@ -42,7 +43,14 @@ public class SandboxArreglos
      */
     public int[] getCopiaEnteros( )
     {
-        return null;
+    	int[] resultado = new int[arregloEnteros.length];
+    	for(int i = 0; i < arregloEnteros.length; i++) {
+    		resultado[i] = arregloEnteros[i];
+    	}
+    	
+    	return resultado;
+    	
+        
     }
 
     /**
@@ -51,7 +59,12 @@ public class SandboxArreglos
      */
     public String[] getCopiaCadenas( )
     {
-        return null;
+        String[] resultado = new String[arregloCadenas.length];
+        for (int i =0; i<arregloCadenas.length;i++) {
+        	resultado[i] = arregloCadenas[i];
+        }
+        
+        return resultado;
     }
 
     /**
@@ -60,7 +73,7 @@ public class SandboxArreglos
      */
     public int getCantidadEnteros( )
     {
-        return -1;
+        return arregloEnteros.length;
     }
 
     /**
@@ -69,7 +82,7 @@ public class SandboxArreglos
      */
     public int getCantidadCadenas( )
     {
-        return -1;
+        return arregloCadenas.length;
     }
 
     /**
@@ -79,6 +92,13 @@ public class SandboxArreglos
      */
     public void agregarEntero( int entero )
     {
+    	int [] newArregloEnteros = new int[arregloEnteros.length+1];
+    	for (int i=0; i<arregloEnteros.length;i++) {
+    		newArregloEnteros[i] = arregloEnteros[i];
+    	}
+    	newArregloEnteros[arregloEnteros.length] = entero;
+    	
+    	arregloEnteros = newArregloEnteros;
 
     }
 
@@ -89,6 +109,14 @@ public class SandboxArreglos
      */
     public void agregarCadena( String cadena )
     {
+    	String [] newArregloCadenas = new String[arregloCadenas.length+1];
+    	for (int i=0; i<arregloCadenas.length;i++) {
+    		newArregloCadenas[i] = arregloCadenas[i];
+    	}
+    	newArregloCadenas[arregloCadenas.length] = cadena;
+    	
+    	arregloCadenas = newArregloCadenas;
+    	
 
     }
 
@@ -98,6 +126,21 @@ public class SandboxArreglos
      */
     public void eliminarEntero( int valor )
     {
+    	int aparicionesValor = 0;
+    	for (int i = 0;i<arregloEnteros.length;i++) {
+    		if(arregloEnteros[i] == valor) {
+    			aparicionesValor++;
+    		}
+    	}
+    	
+    	int[] arraySinValor = new int[arregloEnteros.length - aparicionesValor];
+    	int valoresEnArraySinValor = 0;
+    	for (int i = 0; i<arregloEnteros.length;i++) {
+    		if (arregloEnteros[i] != valor) {
+    			arraySinValor[valoresEnArraySinValor] = arregloEnteros[i];
+    			valoresEnArraySinValor++;
+    		}
+    	}
 
     }
 

@@ -231,7 +231,22 @@ public class SandboxListas
      */
     public void organizarEnteros( )
     {
-    	listaEnteros.sort(null);
+
+    	for (int i = 0; i < listaEnteros.size(); i++) {
+    		int numeroMayor = listaEnteros.get(i);
+    		for (int k = i; k < listaEnteros.size(); k++) {
+    			int numeroActual = listaEnteros.get(k);
+    			if (numeroActual>numeroMayor) {
+    				listaEnteros.remove(i);
+    				listaEnteros.add(i, numeroActual);
+    				listaEnteros.remove(k);
+    				listaEnteros.add(k, numeroMayor);
+    				numeroMayor = numeroActual;
+    				
+    			}
+    		}
+    	}
+    	
     }
 
     /**
@@ -239,6 +254,7 @@ public class SandboxListas
      */
     public void organizarCadenas( )
     {
+    	listaCadenas.sort(null);
 
     }
 
