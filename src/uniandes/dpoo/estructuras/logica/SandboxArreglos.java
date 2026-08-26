@@ -2,6 +2,7 @@ package uniandes.dpoo.estructuras.logica;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Esta clase tiene un conjunto de métodos para practicar operaciones sobre arreglos de enteros y de cadenas.
@@ -141,6 +142,8 @@ public class SandboxArreglos
     			valoresEnArraySinValor++;
     		}
     	}
+    	
+    	arregloEnteros = arraySinValor;
 
     }
 
@@ -193,13 +196,15 @@ public class SandboxArreglos
      */
     public void eliminarEnteroPorPosicion( int posicion )
     {
-    	if (posicion < arregloEnteros.length) {
+    	if (posicion < arregloEnteros.length && posicion >=0) {
     		int[]resultado = new int[arregloEnteros.length-1];
-    		int k=0;
-    		for (int i = 0; i<resultado.length; i++) {
-    			if(k != posicion) {
-    				resultado[i] = arregloEnteros[k];
+    		int k = 0;
+    		for (int i = 0; i<arregloEnteros.length; i++) {
+    			if(i != posicion) {
+    				resultado[k] = arregloEnteros[i];
+    				k++;
     			}
+    			
     		}
     		
     		arregloEnteros = resultado;
@@ -253,6 +258,18 @@ public class SandboxArreglos
      */
     public void volverPositivos( )
     {
+    	int[]arregloPositivo = new int[arregloEnteros.length];
+    	
+    	for(int i=0; i<arregloEnteros.length; i++) {
+    		int currNum = arregloEnteros[i];
+    		if(currNum < 0) {
+    			currNum *= -1;
+    		}
+    		
+    		arregloPositivo[i] = currNum;
+    	}
+    	
+    	arregloEnteros = arregloPositivo;
 
     }
 
@@ -327,7 +344,7 @@ public class SandboxArreglos
     {
     	int count = 0;
         for (String currCadena:arregloCadenas) {
-        	if (currCadena.equals(cadena)) {
+        	if (currCadena.equalsIgnoreCase(cadena)) {
         		count++;
         	}
         }
@@ -392,7 +409,16 @@ public class SandboxArreglos
      */
     public HashMap<Integer, Integer> calcularHistograma( )
     {
-        return null;
+    	HashMap<Integer, Integer> resultado = new HashMap<>();
+    	for (int numero: arregloEnteros) {
+    		
+    		int apariciones = 0;
+    		if(resultado.containsKey(numero)){
+    			apariciones = resultado.get(numero);
+    		}
+    		resultado.put(numero, apariciones + 1);
+    	}
+        return resultado;
     }
 
     /**
@@ -401,7 +427,16 @@ public class SandboxArreglos
      */
     public int contarEnterosRepetidos( )
     {
-        return -1;
+    	int resultado = 0;
+        HashMap <Integer, Integer> histograma = calcularHistograma();
+        Set<Integer> keySet = histograma.keySet();
+        for (int key:keySet) {
+        	if (histograma.get(key) > 1) {
+        		resultado ++;
+        	}
+        }
+        
+        return resultado;
     }
 
     /**
@@ -411,7 +446,25 @@ public class SandboxArreglos
      */
     public boolean compararArregloEnteros( int[] otroArreglo )
     {
-        return false;
+    	boolean resultado = false;
+    	if (otroArreglo.length == arregloEnteros.length) {
+    		boolean areDifferent = false;
+    		int i=0;
+    		while(!areDifferent && i<otroArreglo.length) {
+    			if(otroArreglo[i] != arregloEnteros[i])
+    				areDifferent = true;
+    			
+    			i++;
+    		}
+    		if(!areDifferent) {
+    			resultado= true;
+    		}
+    	}
+    	
+    	
+    	
+    	return resultado;
+        
     }
 
     /**
@@ -421,7 +474,33 @@ public class SandboxArreglos
      */
     public boolean mismosEnteros( int[] otroArreglo )
     {
-        return false;
+    	boolean resultado = true;
+    	if (otroArreglo.length == arregloEnteros.length) {
+    		
+    		HashMap<Integer, Integer> histogramaOtroArreglo = new HashMap<>();
+        	for (int numero: otroArreglo) {
+        		
+        		int apariciones = 0;
+        		if(histogramaOtroArreglo.containsKey(numero)){
+        			apariciones = histogramaOtroArreglo.get(numero);
+        		}
+        		histogramaOtroArreglo.put(numero, apariciones + 1);		
+        	};
+        	
+    		HashMap <Integer, Integer> histograma = calcularHistograma();
+    		
+    		 Set<Integer> keySet = histograma.keySet();
+    		 for(int key: keySet) {
+    			 if(histogramaOtroArreglo.get(key) != histograma.get(key)) {
+    				 resultado = false;
+    			 }
+    		 }
+
+    	}else {
+    		resultado = false;
+    	}
+
+        return resultado;
     }
 
     /**
@@ -436,6 +515,12 @@ public class SandboxArreglos
      */
     public void generarEnteros( int cantidad, int minimo, int maximo )
     {
+    	int[] newArray = new int[cantidad];
+    	for (int i = 0; i<cantidad; i++) {
+    		newArray[i] = (int) (Math.random() * (maximo - minimo + 1)) + minimo;
+    	}
+    	
+    	arregloEnteros = newArray;
 
     }
 
