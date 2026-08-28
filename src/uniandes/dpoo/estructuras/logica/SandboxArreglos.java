@@ -153,6 +153,30 @@ public class SandboxArreglos
      */
     public void eliminarCadena( String cadena )
     {
+    	int aparicionesCadena = 0;
+    	for(String cadenaActual : arregloCadenas) {
+    		if(cadenaActual.equals(cadena)) {
+    			aparicionesCadena++;
+    		}
+    	}
+    	
+    	
+    	String[]arraySinCadena = new String[arregloCadenas.length-aparicionesCadena];
+    	int posArraySinCadena = 0;
+    	for (int i = 0; i<arregloCadenas.length;i++) {
+    		if (!arregloCadenas[i].equals(cadena)) {
+    			arraySinCadena[posArraySinCadena] = arregloCadenas[i];
+    			posArraySinCadena++;
+    		}
+    	}
+    	
+    	arregloCadenas = arraySinCadena;
+    	
+    	
+    	
+    	
+    	
+    	
     	
 
     }
