@@ -1,6 +1,7 @@
 package uniandes.dpoo.estructuras.logica;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -145,7 +146,10 @@ public class SandboxListas
      */
     public void eliminarCadena( String cadena )
     {
-    	listaCadenas.remove(cadena);
+    	while(listaCadenas.contains(cadena)) {
+    		listaCadenas.remove(cadena);
+    	}
+    	
 
     }
 
@@ -265,7 +269,14 @@ public class SandboxListas
      */
     public int contarApariciones( int valor )
     {
-        return -1;
+    	int count = 0;
+    	for(int entero: listaEnteros) {
+    		if(valor == entero) {
+    			count++;
+    		}
+    	}
+    	
+        return count;
     }
 
     /**
@@ -277,7 +288,14 @@ public class SandboxListas
      */
     public int contarApariciones( String cadena )
     {
-        return -1;
+    	int count = 0;
+    	for(String currCadena: listaCadenas) {
+    		if(currCadena.equalsIgnoreCase(cadena)) {
+    			count++;
+    		}
+    	}
+    	
+        return count;
     }
 
     /**
@@ -286,7 +304,23 @@ public class SandboxListas
      */
     public int contarEnterosRepetidos( )
     {
-        return -1;
+    	HashMap<Integer, Integer> registro = new HashMap<>();
+    	for(int entero:listaEnteros) {
+    		int apariciones = 1;
+    		if (registro.containsKey(entero)) {
+    			apariciones = registro.get(entero) +1;
+    		}
+    		registro.put(entero, apariciones);
+    	}
+    	
+    	int enterosRepetidos = 0;
+    	for(int repeticiones : registro.values()) {
+    		if(repeticiones > 1) {
+    			enterosRepetidos++;
+    		}
+    	}
+    		
+        return enterosRepetidos;
     }
 
     /**
@@ -296,7 +330,24 @@ public class SandboxListas
      */
     public boolean compararArregloEnteros( int[] otroArreglo )
     {
-        return false;
+    	boolean resultado = false;
+    	if (listaEnteros.size() == otroArreglo.length) {
+    		int i = 0;
+    		boolean sonDiferentes = false;
+    		while(!sonDiferentes && i<listaEnteros.size()) {
+    			if(listaEnteros.get(i) != otroArreglo[i]) {
+    				sonDiferentes = true;
+    			}
+    			i++;
+    		}
+    		
+    		if (!sonDiferentes) {
+    			resultado = true;
+    		}
+    	}
+    		
+    		
+        return resultado;
     }
 
     /**
@@ -311,6 +362,10 @@ public class SandboxListas
      */
     public void generarEnteros( int cantidad, int minimo, int maximo )
     {
+    	listaEnteros.clear();
+    	for (int i = 0; i<cantidad; i++) {
+    		listaEnteros.add((int) (Math.random() * (maximo - minimo + 1)) + minimo);
+    	}
 
     }
 
