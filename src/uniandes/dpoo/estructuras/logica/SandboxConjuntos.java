@@ -2,6 +2,7 @@ package uniandes.dpoo.estructuras.logica;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
@@ -25,6 +26,7 @@ public class SandboxConjuntos
      * Por defecto, los elementos del conjunto están ordenados lexicográficamente.
      */
     private NavigableSet<String> arbolCadenas;
+    
 
     /**
      * Crea una nueva instancia de la clase con las dos listas inicializadas pero vacías
@@ -144,7 +146,7 @@ public class SandboxConjuntos
     	String cadenaEnConjunto = null;
     	for(String cadenaConjunto: arbolCadenas) {
     		if(cadena.toLowerCase().equals(cadenaConjunto.toLowerCase())) {
-    			cadenaEnConjunto = cadena;
+    			cadenaEnConjunto = cadenaConjunto;
     		}
     	}
     	if(cadenaEnConjunto != null) {
@@ -172,6 +174,10 @@ public class SandboxConjuntos
      */
     public void reiniciarConjuntoCadenas( List<Object> objetos )
     {
+    	arbolCadenas.clear();
+    	for (Object objeto: objetos) {
+    		arbolCadenas.add(objeto.toString());
+    	}
 
     }
 
@@ -182,6 +188,13 @@ public class SandboxConjuntos
      */
     public void volverMayusculas( )
     {
+    	NavigableSet<String> arbolMayusculas = new TreeSet<String>( );
+    	for (String cadena: arbolCadenas) {
+    		arbolMayusculas.add(cadena.toUpperCase());
+    	}
+    	
+    	arbolCadenas = arbolMayusculas;
+    	
     }
 
     /**
@@ -189,9 +202,8 @@ public class SandboxConjuntos
      */
     public TreeSet<String> invertirCadenas( )
     {
-        return null;
+        return new TreeSet<String>(arbolCadenas.descendingSet());
     }
-
     /**
      * Verifica si todos los elementos en el arreglo de cadenas del parámetro hacen parte del conjunto de cadenas
      * @param otroArreglo El arreglo de enteros con el que se debe comparar
@@ -199,7 +211,18 @@ public class SandboxConjuntos
      */
     public boolean compararElementos( String[] otroArreglo )
     {
-        return false;
+    	HashMap<String, Boolean> registro = new HashMap<>();
+    	for (String cadena: otroArreglo) {
+    		registro.put(cadena, false);
+    	}
+    	for (String cadena: arbolCadenas) {
+    		if(registro.containsKey(cadena)) {
+    			registro.put(cadena, true);
+    		}
+    		    
+    	}
+    	
+        return !registro.containsValue(false);
     }
 
 }
